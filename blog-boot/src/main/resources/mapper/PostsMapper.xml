@@ -9,6 +9,7 @@
             <result property="title" column="title" jdbcType="VARCHAR"/>
             <result property="content" column="content" jdbcType="VARCHAR"/>
             <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
             <result property="created" column="created" jdbcType="TIMESTAMP"/>
             <result property="lastModified" column="last_modified" jdbcType="TIMESTAMP"/>
     </resultMap>
@@ -23,6 +24,13 @@
         <include refid="Base_Column_List" />
         from posts
         where  post_id = #{postId,jdbcType=BIGINT} 
+    </select>
+    <select id="findByUserId" resultMap="BaseResultMap">
+        select posts.post_id,posts.title,posts.content,
+               posts.user_id,posts.created,posts.last_modified, users.username
+        from posts
+                 left join users on posts.user_id = users.user_id
+                where  posts.user_id = #{userId,jdbcType=BIGINT} order by created desc
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

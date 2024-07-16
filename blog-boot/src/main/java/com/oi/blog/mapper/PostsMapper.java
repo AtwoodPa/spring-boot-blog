@@ -2,6 +2,8 @@ package com.oi.blog.mapper;
 
 import com.oi.blog.domain.Post;
 
+import java.util.List;
+
 
 public interface PostsMapper {
 
@@ -17,4 +19,5 @@ public interface PostsMapper {
 
     int updateByPrimaryKey(Post record);
 
+    List<Post> findByUserId(Long userId);
 }
