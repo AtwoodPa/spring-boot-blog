@@ -5,10 +5,7 @@ import com.oi.blog.domain.User;
 import com.oi.blog.domain.dto.AuthRequest;
 import com.oi.blog.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 认证授权接口
@@ -30,5 +27,10 @@ public class AuthController {
     @PostMapping("/login")
     public Result login(@RequestBody AuthRequest authRequest) {
         return Result.ok(authService.login(authRequest.getUsername(), authRequest.getPassword()));
+    }
+
+    @GetMapping("/me")
+    public Result me() {
+        return Result.ok(authService.me());
     }
 }

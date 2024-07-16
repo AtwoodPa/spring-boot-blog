@@ -6,7 +6,9 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,6 +17,8 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @TableName users
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User implements Serializable, UserDetails {
     /**
      * 用户ID
@@ -48,27 +52,7 @@ public class User implements Serializable, UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    public User(String username, String password, ArrayList<Object> objects) {
-        this.username = username;
-        this.password = password;
-    }
 
-    public User() {
-    }
-
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    public User(Long userId, String username, String password, String email, Date created, Date lastModified) {
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.created = created;
-        this.lastModified = lastModified;
-    }
 
     @Override
     public boolean equals(Object that) {
