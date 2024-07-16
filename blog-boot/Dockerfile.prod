@@ -1,0 +1,11 @@
+# 使用OpenJDK 17基础镜像（精简版）
+FROM openjdk:17-jdk-slim
+
+# 创建一个挂载点，Docker在运行时会在该目录创建一个临时文件系统并挂载
+VOLUME /tmp
+
+# 将构建好的JAR文件复制到容器中，并命名为app.jar
+COPY target/blog-0.0.1-SNAPSHOT.jar app.jar
+
+# 设置应用启动时的入口命令
+ENTRYPOINT ["java", "-jar", "/app.jar"]
