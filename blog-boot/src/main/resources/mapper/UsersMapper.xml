@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oi.blog.mapper.UsersMapper">
+
+    <resultMap id="BaseResultMap" type="com.oi.blog.domain.User">
+            <id property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="created" column="created" jdbcType="TIMESTAMP"/>
+            <result property="lastModified" column="last_modified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,username,password,
+        email,created,last_modified
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from users
+        where  user_id = #{userId,jdbcType=BIGINT}
+    </select>
+
+    <select id="findByUsername" parameterType="string" resultType="com.oi.blog.domain.User">
+        select <include refid="Base_Column_List" />
+        from users
+        where username = #{username}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from users
+        where  user_id = #{userId,jdbcType=BIGINT} 
+    </delete>
+    <insert id="save" keyColumn="user_id" keyProperty="userId" parameterType="com.oi.blog.domain.User" useGeneratedKeys="true">
+        insert into users
+        ( user_id,username,password
+        ,email,created,last_modified
+        )
+        values (#{userId,jdbcType=BIGINT},#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR}
+        ,#{email,jdbcType=VARCHAR},#{created,jdbcType=TIMESTAMP},#{lastModified,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" keyColumn="user_id" keyProperty="userId" parameterType="com.oi.blog.domain.User" useGeneratedKeys="true">
+        insert into users
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="userId != null">user_id,</if>
+                <if test="username != null">username,</if>
+                <if test="password != null">password,</if>
+                <if test="email != null">email,</if>
+                <if test="created != null">created,</if>
+                <if test="lastModified != null">last_modified,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="userId != null">#{userId,jdbcType=BIGINT},</if>
+                <if test="username != null">#{username,jdbcType=VARCHAR},</if>
+                <if test="password != null">#{password,jdbcType=VARCHAR},</if>
+                <if test="email != null">#{email,jdbcType=VARCHAR},</if>
+                <if test="created != null">#{created,jdbcType=TIMESTAMP},</if>
+                <if test="lastModified != null">#{lastModified,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.oi.blog.domain.User">
+        update users
+        <set>
+                <if test="username != null">
+                    username = #{username,jdbcType=VARCHAR},
+                </if>
+                <if test="password != null">
+                    password = #{password,jdbcType=VARCHAR},
+                </if>
+                <if test="email != null">
+                    email = #{email,jdbcType=VARCHAR},
+                </if>
+                <if test="created != null">
+                    created = #{created,jdbcType=TIMESTAMP},
+                </if>
+                <if test="lastModified != null">
+                    last_modified = #{lastModified,jdbcType=TIMESTAMP},
+                </if>
+        </set>
+        where   user_id = #{userId,jdbcType=BIGINT} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.oi.blog.domain.User">
+        update users
+        set 
+            username =  #{username,jdbcType=VARCHAR},
+            password =  #{password,jdbcType=VARCHAR},
+            email =  #{email,jdbcType=VARCHAR},
+            created =  #{created,jdbcType=TIMESTAMP},
+            last_modified =  #{lastModified,jdbcType=TIMESTAMP}
+        where   user_id = #{userId,jdbcType=BIGINT} 
+    </update>
+</mapper>

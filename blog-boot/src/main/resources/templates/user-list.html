@@ -1,0 +1,32 @@
+<!-- user-list.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<h1>用户列表</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>用户名</th>
+        <th>邮箱</th>
+        <th>创建时间</th>
+        <th>最后修改时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.userId}">1</td>
+        <td th:text="${user.username}">张三</td>
+        <td th:text="${user.email}">zhangsan@example.com</td>
+        <td th:text="${user.created}">2023-01-15 08:45:00</td>
+        <td th:text="${user.lastModified}">2023-01-15 08:45:00</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!-- post-list.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>文章列表</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<h1>文章列表</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>标题</th>
+        <th>内容</th>
+        <th>用户ID</th>
+        <th>创建时间</th>
+        <th>最后修改时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="post : ${posts}">
+        <td th:text="${post.postId}">1</td>
+        <td th:text="${post.title}">Spring Boot 入门</td>
+        <td th:text="${post.content}">Spring Boot 让创建独立的、生产级 Spring 应用程序变得容易，只需“运行”即可。</td>
+        <td th:text="${post.userId}">1</td>
+        <td th:text="${post.created}">2023-01-16 09:00:00</td>
+        <td th:text="${post.lastModified}">2023-01-16 09:00:00</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

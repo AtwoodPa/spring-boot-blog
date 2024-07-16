@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oi.blog.mapper.PostsMapper">
+
+    <resultMap id="BaseResultMap" type="com.oi.blog.domain.Post">
+            <id property="postId" column="post_id" jdbcType="BIGINT"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="created" column="created" jdbcType="TIMESTAMP"/>
+            <result property="lastModified" column="last_modified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        post_id,title,content,
+        user_id,created,last_modified
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from posts
+        where  post_id = #{postId,jdbcType=BIGINT} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from posts
+        where  post_id = #{postId,jdbcType=BIGINT} 
+    </delete>
+    <insert id="insert" keyColumn="post_id" keyProperty="postId" parameterType="com.oi.blog.domain.Post" useGeneratedKeys="true">
+        insert into posts
+        ( post_id,title,content
+        ,user_id,created,last_modified
+        )
+        values (#{postId,jdbcType=BIGINT},#{title,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR}
+        ,#{userId,jdbcType=BIGINT},#{created,jdbcType=TIMESTAMP},#{lastModified,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" keyColumn="post_id" keyProperty="postId" parameterType="com.oi.blog.domain.Post" useGeneratedKeys="true">
+        insert into posts
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="postId != null">post_id,</if>
+                <if test="title != null">title,</if>
+                <if test="content != null">content,</if>
+                <if test="userId != null">user_id,</if>
+                <if test="created != null">created,</if>
+                <if test="lastModified != null">last_modified,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="postId != null">#{postId,jdbcType=BIGINT},</if>
+                <if test="title != null">#{title,jdbcType=VARCHAR},</if>
+                <if test="content != null">#{content,jdbcType=VARCHAR},</if>
+                <if test="userId != null">#{userId,jdbcType=BIGINT},</if>
+                <if test="created != null">#{created,jdbcType=TIMESTAMP},</if>
+                <if test="lastModified != null">#{lastModified,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.oi.blog.domain.Post">
+        update posts
+        <set>
+                <if test="title != null">
+                    title = #{title,jdbcType=VARCHAR},
+                </if>
+                <if test="content != null">
+                    content = #{content,jdbcType=VARCHAR},
+                </if>
+                <if test="userId != null">
+                    user_id = #{userId,jdbcType=BIGINT},
+                </if>
+                <if test="created != null">
+                    created = #{created,jdbcType=TIMESTAMP},
+                </if>
+                <if test="lastModified != null">
+                    last_modified = #{lastModified,jdbcType=TIMESTAMP},
+                </if>
+        </set>
+        where   post_id = #{postId,jdbcType=BIGINT} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.oi.blog.domain.Post">
+        update posts
+        set 
+            title =  #{title,jdbcType=VARCHAR},
+            content =  #{content,jdbcType=VARCHAR},
+            user_id =  #{userId,jdbcType=BIGINT},
+            created =  #{created,jdbcType=TIMESTAMP},
+            last_modified =  #{lastModified,jdbcType=TIMESTAMP}
+        where   post_id = #{postId,jdbcType=BIGINT} 
+    </update>
+</mapper>
